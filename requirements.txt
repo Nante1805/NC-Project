@@ -1,0 +1,2 @@
+tkinter
+webdriver-manager==3.4.2
