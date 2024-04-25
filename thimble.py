@@ -3,7 +3,6 @@ from tkinter import messagebox
 from threading import Thread
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
@@ -14,22 +13,18 @@ def login(username, password):
         driver = webdriver.Chrome(service=service)
         
         driver.get("https://1xbet.com/")
-        driver.implicitly_wait(10)  # Implicit wait to wait for elements to appear
+        driver.implicitly_wait(10)
         
-        # Find the login button and click it
         login_button = driver.find_element(By.XPATH, "//a[contains(text(),'Log in')]")
         login_button.click()
         
-        # Wait for the login form to load
         time.sleep(2)
         
-        # Find the username and password input fields and fill them with provided credentials
         username_input = driver.find_element(By.NAME, "username")
         password_input = driver.find_element(By.NAME, "password")
         username_input.send_keys(username)
         password_input.send_keys(password)
         
-        # Submit the form
         password_input.submit()
         
         driver.implicitly_wait(10)
@@ -46,8 +41,8 @@ def login(username, password):
 def on_login_click():
     username = username_entry.get()
     password = password_entry.get()
-    if username and password:  # Check if username and password are provided
-        login_button.config(state=tk.DISABLED)  # Disable login button during login process
+    if username and password:
+        login_button.config(state=tk.DISABLED)
         Thread(target=login, args=(username, password)).start()
     else:
         messagebox.showerror("Error", "Please enter both username and password.")
